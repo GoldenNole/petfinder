@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Pets List</h1>
+    <ul></ul>
+
+    <script>
+       
+        const ul = document.querySelector('ul');
+        // Loop through the pets data and create list items for each pet
+        fetch("http://localhost:8080/api/v1/pets/").then(response => response.json()).then(pets => {
+        pets.forEach(pet => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <strong>Name:</strong> ${pet.name}<br>
+                <strong>Breed:</strong> ${pet.breed}<br>
+                <strong>Age:</strong> ${pet.age}<br>
+                <strong>Owner:</strong> ${pet.owner}<br>
+                <strong>Telephone:</strong> ${pet.telephone}<br>
+                <strong>Appointments:</strong> ${pet.appointments.map(appointment => `${appointment.date} - ${appointment.time} (${appointment.reason})`).join(', ')}
+                <br><br>
+            `;
+            ul.appendChild(li);
+        });
+    });
+    </script>
+</body>
+</html>
